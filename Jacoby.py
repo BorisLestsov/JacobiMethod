@@ -1,7 +1,10 @@
 import numpy as np
 import math
+from sys import argv
 
-precision = 10**-8
+
+precision = np.finfo(float).eps
+
 
 def sign(x):
     if x >= 0:
@@ -93,7 +96,10 @@ class JacobiSolver:
 
 
 def main():
-    data = np.loadtxt("matrix.txt")
+    if len(argv) != 2:
+        raise Exception("No input file")
+
+    data = np.loadtxt(argv[1])
     inp_m = np.matrix(data, dtype=np.float)
 
     J = JacobiSolver(inp_m)
