@@ -7,6 +7,10 @@ precision = np.finfo(float).eps
 
 
 def sign(x):
+    """
+    Returns sign of a number
+    """
+
     if x >= 0:
         return 1
     else:
@@ -14,6 +18,10 @@ def sign(x):
 
 
 def check_symmetric(m):
+    """
+    Check if matrix is symmetric
+    """
+
     if m.ndim != 2 or m.shape[0] != m.shape[1]:
         raise Exception("Matrix is not symmetric")
     for i in np.arange(m.shape[0]):
@@ -52,7 +60,10 @@ class JacobiSolver:
             i_max, j_max = self._find_ind_max()
 
         for i in np.arange(self.m.shape[0]):
-            self.eigenvalues[i] = self.m[i, i]
+            if abs(self.m[i, i]) >= precision:
+                self.eigenvalues[i] = self.m[i, i]
+            else:
+                self.eigenvalues[i] = 0
         return self.eigenvalues, self.eigenvectors
 
     # Private methods:
